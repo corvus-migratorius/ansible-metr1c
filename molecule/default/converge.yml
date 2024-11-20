@@ -2,4 +2,10 @@
 - name: Converge
   hosts: all
   roles:
-    - role: genlab.template
+    - role: genlab.metr1c
+      metr1c_version: "v0.1.0"
+      clusterUUID: "xxxxxxxx"
+      cluster_admin: "Администратор"
+      cluster_pw: "secrets/metr1c_pw.yml"
+      platform_version: "8.3.24.1467"
+      metr1c_port: "1599"
