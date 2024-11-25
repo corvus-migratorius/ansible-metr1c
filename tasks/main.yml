@@ -1,7 +1,7 @@
 ---
 - name: Create directory for metr1c
   ansible.builtin.file:
-    path: "{{ metr1c_dir }}"
+    path: "/opt/metr1c"
     state: directory
     owner: root
     group: root
@@ -30,4 +30,3 @@
     state: started
     enabled: true
     daemon_reload: true
-
