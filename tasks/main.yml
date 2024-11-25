@@ -1,12 +1,19 @@
 ---
-- name: "Install Loki if it is not present"
-  ansible.builtin.get-_url:
-    src: "https://github.com/Doumor/metr1c/releases/download/{{ metr1c_version }}/metr1c"
+- name: Create directory for metr1c
+  ansible.builtin.file:
+    path: "{{ metr1c_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: "Install metr1c if it is not present"
+  ansible.builtin.get_url:
+    url: "https://github.com/Doumor/metr1c/releases/download/{{ metr1c_version }}/metr1c"
     dest: /opt/metr1c/
     owner: root
     group: root
     mode: "0755"
-    remote_src: true
 
 - name: "Create systemd metr1c service file"
   ansible.builtin.template:
