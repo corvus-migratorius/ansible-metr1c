@@ -7,13 +7,27 @@
     group: root
     mode: "0755"
 
-- name: "Install metr1c if it is not present"
-  ansible.builtin.get_url:
-    url: "https://github.com/Doumor/metr1c/releases/download/{{ metr1c_version }}/metr1c"
-    dest: /opt/metr1c/
-    owner: root
-    group: root
-    mode: "0755"
+- name: "Install requested metr1c version"
+  block:
+    - name: "Check metr1c version"
+      ansible.builtin.command: /opt/metr1c/metr1c -version
+      register: metr1c_ver_check
+      changed_when: false
+
+    - name: "Assert version correctness"
+      ansible.builtin.assert:
+        that: "metr1c_version in metr1c_ver_check.stdout"
+        success_msg: "Expected Loki version available ({{ metr1c_version }})"
+        fail_msg: "Expected version '{{ metr1c_version }}'; available is '{{ metr1c_ver_check.stdout }}'"
+
+  rescue:
+    - name: "Install metr1c if it is not present"
+      ansible.builtin.get_url:
+        url: "https://github.com/Doumor/metr1c/releases/download/{{ metr1c_version }}/metr1c"
+        dest: /opt/metr1c/
+        owner: root
+        group: root
+        mode: "0755"
 
 - name: "Create systemd metr1c service file"
   ansible.builtin.template:
@@ -23,7 +37,7 @@
     group: root
     mode: "0750"
 
-- name: "Make sure that the timer service is started"
+- name: "Make sure that the metr1c service is started"
   become: true
   ansible.builtin.systemd:
     name: "metr1c.service"
