@@ -17,14 +17,14 @@
     - name: "Assert version correctness"
       ansible.builtin.assert:
         that: "metr1c_version in metr1c_ver_check.stdout"
-        success_msg: "Expected Loki version available ({{ metr1c_version }})"
+        success_msg: "Expected metr1c version available ({{ metr1c_version }})"
         fail_msg: "Expected version '{{ metr1c_version }}'; available is '{{ metr1c_ver_check.stdout }}'"
 
   rescue:
     - name: "Install metr1c if it is not present"
       ansible.builtin.get_url:
-        url: "https://github.com/Doumor/metr1c/releases/download/{{ metr1c_version }}/metr1c"
-        dest: /opt/metr1c/
+        url: "https://github.com/Doumor/metr1c/releases/download/{{ metr1c_version }}/metr1c_amd64_linux"
+        dest: /opt/metr1c/metr1c
         owner: root
         group: root
         mode: "0755"
