@@ -36,6 +36,7 @@
     owner: root
     group: root
     mode: "0750"
+  register: metr1c_service
 
 - name: "Start systemd service" 
   when: "deploy is true"

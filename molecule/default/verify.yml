@@ -10,7 +10,6 @@
       ansible.builtin.command:
         cmd: /opt/metr1c/metr1c -version
       register: cmd1
-      failed_when: cmd1.rc != 0
       changed_when: false
 
     - name: "Check metr1c version"
