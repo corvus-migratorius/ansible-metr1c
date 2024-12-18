@@ -11,6 +11,7 @@ None
 Role Variables
 --------------
 
+      deploy: set true or false depending on whether we start the service or not, set false when running molecule test
       metr1c_version: metr1c version  to be deployed
       cluster_uuid: cluster id
       cluster_admin: name of cluster admin
@@ -29,6 +30,7 @@ Example Playbook
 ```yaml
 roles:
   - role: genlab.metr1c
+    deploy: false
     metr1c_version: "0.0.1"
     cluster_uuid: "111-111-111-111"
     cluster_admin: "test"
